@@ -3,8 +3,7 @@ module.exports = {
     "react-app",
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended",
-    "plugin:cypress/recommended",
-    "prettier"
+    "plugin:cypress/recommended"
   ],
   "settings": {
     "react": {

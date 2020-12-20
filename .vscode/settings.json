@@ -1,9 +1,19 @@
 {
   "typescript.preferences.importModuleSpecifier": "relative",
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  // format here mean vscode trim white spaces.. this may conflict with eslint
+  "editor.formatOnSave": false,
+  // eslint enabled, it will handle formating and source code quality checks.
+	"editor.codeActionsOnSave": {
+		"source.fixAll": true,
+		"source.organizeImports": true
+	},
+  "[json]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "gitlens.codeLens.scopes": ["document"],
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "mohsen1.prettify-json"
+  }
 }

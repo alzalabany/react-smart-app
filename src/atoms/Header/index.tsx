@@ -2,7 +2,7 @@ import React from 'react';
 import claim from '../../assets/brand/dt-claim.svg';
 import logo from '../../assets/brand/dt-logo.svg';
 
-const BrandBar = () => (
+export const AppHeader = () => (
   <div className="brandbar" data-testid="appheader">
     <div className="container">
       <div className="brand-logo">
@@ -19,5 +19,3 @@ const BrandBar = () => (
     </div>
   </div>
 );
-
-export default BrandBar;

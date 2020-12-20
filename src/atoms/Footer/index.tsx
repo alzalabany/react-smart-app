@@ -3,16 +3,16 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import claim from '../../assets/brand/dt-claim.svg';
 import logo from '../../assets/brand/dt-logo.svg';
-import t from '../../i18n/de.json';
+import './footer.scss';
 import { FooterLink } from './types';
 
 const currentYear = new Date().getFullYear();
 
-interface Props {
+export interface FooterProps {
   pages: FooterLink[];
 }
 
-export const Footer: FC<Props> = ({ pages }) => (
+export const Footer: FC<FooterProps> = ({ pages }) => (
   <footer className="footer" data-testid="footer">
     <div className="container">
       <div className="brand-images">
@@ -21,7 +21,7 @@ export const Footer: FC<Props> = ({ pages }) => (
           <span className="sr-only">Telekom Logo</span>
         </div>
         <div className="brand-claim">
-          <img src={claim} alt={t.app.accessibility.brand_claim} />
+          <img src={claim} alt={'brand_claim'} />
           <span className="sr-only">Brand Claim</span>
         </div>
       </div>

@@ -7,7 +7,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 export const {{ properCase name }}: FC<Props> = ({ children }) => {
   return (
-    <div data-testid="main">
+    <div data-testid="{{ lowerCase name }}">
       {children || `the snozzberries taste like snozzberries`}
     </div>
   );

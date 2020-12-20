@@ -29,7 +29,7 @@
     "watch": "tsdx watch",
     "test": "tsdx test",
     "lint": "tsdx lint src",
-    "cy:run": "yarn wait-on http://localhost:1234 && cypress open",
+    "cy:run": "yarn wait-on http://localhost:5000 && cypress open",
     "e2e": "concurrently \"yarn start\" \"yarn cy:run\" ",
     "commit": "clear && git-cz && git push -u origin --tags",
     "prepare": "tsdx build",
@@ -47,7 +47,7 @@
   },
   "jest": {
     "setupFilesAfterEnv": [
-      "./setupTests.ts"
+      "./src/setupTests.ts"
     ],
     "transform": {
       "^.+\\.mdx$": "@storybook/addon-docs/jest-transform-mdx",
@@ -104,6 +104,7 @@
     "@storybook/addon-links": "^6.1.11",
     "@storybook/addons": "^6.1.11",
     "@storybook/react": "^6.1.11",
+    "@testing-library/cypress": "^7.0.3",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@types/faker": "^5.1.5",

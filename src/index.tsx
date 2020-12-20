@@ -1,2 +1,2 @@
-/* istanbul ignore next */ 
+/* istanbul ignore next */
 export * from './Thing';

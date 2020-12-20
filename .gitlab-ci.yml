@@ -1,0 +1,77 @@
+image: node:latest
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm/
+    - .ssh/
+    - node_modules/
+  policy: pull
+
+stages:
+  - setup
+  - qc
+  - deploy
+  - qa
+
+before_script: 
+  - '[[ -d .npm ]] && du -hs .npm'
+  - '[[ -d node_modules ]] && du -hs node_modules'
+  - '[[ -d .ssh ]] && du -hs .ssh'
+
+.base: 
+  tags: 
+    - docker
+  allow_failure: false
+
+setup:
+  extends: .base
+  stage: setup
+  script: 
+    - mkdir -p .ssh
+    - mkdir -p .npm
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > .ssh/key.pem
+    - chmod 400 .ssh/key.pem
+    - yarn install  --cache-folder .npm --prefer-offline
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - .npm/
+      - .ssh/
+      - node_modules/
+    policy: pull-push
+    when: on_success
+
+unit test:
+  extends: .base
+  stage: qc
+  script:
+    - yarn test
+
+liniting:
+  extends: .base
+  stage: qa
+  script:
+    - yarn lint
+  allow_failure: true
+
+building docs: 
+  extends: .base
+  stage: qa
+  script: 
+    - yarn build
+    - yarn build:docs
+    - mv docs public
+  artifacts:
+    paths:
+      - public
+  allow_failure: true
+
+Deploy docs to Stage:
+  extends: .base
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+  script:
+    - ssh -o StrictHostKeyChecking=no -i .ssh/key.pem root@213.244.192.11 'cd /usr/miko && git reset --hard develop && git pull && yarn && yarn build && yarn build:docs'
+    - ssh -o StrictHostKeyChecking=no -i .ssh/key.pem root@213.244.192.11 '(pm2 delete all || echo 'pm2 ready') && NODE_ENV=production pm2 serve docs 5000 --name docs'

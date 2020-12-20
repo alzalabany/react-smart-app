@@ -1,0 +1,106 @@
+{
+  "name": "@smart/app",
+  "title": "template for react library",
+  "module": "dist/pricing.esm.js",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "author": {
+    "name": "Momen Zalabany",
+    "email": "alzalabany@gmail.com",
+    "url": "https://github.com/alzalabany"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint src",
+    "commit": "clear && git-cz && git push -u origin --tags",
+    "prepare": "tsdx build",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": ">=16",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "reselect": "^4.0.0",
+    "styled-components": "^5.2.1"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./setupTests.ts"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "yarn lint --fix && yarn build && yarn test",
+      "pre-push": "CI=true yarn test"
+    }
+  },
+  "manual-lint-staged-@depricated": {
+    "src/**/*.{js,ts,tsx}": [
+      "prettier --config .prettierrc --write",
+      "eslint --fix \"src/**/*.{ts,tsx}\"",
+      "eslint \"src/**/*.{ts,tsx}\""
+    ]
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@rollup/plugin-image": "^2.0.6",
+    "@storybook/addon-a11y": "^6.1.11",
+    "@storybook/addon-docs": "^6.1.11",
+    "@storybook/addon-essentials": "^6.1.11",
+    "@storybook/addon-info": "^5.3.21",
+    "@storybook/addon-links": "^6.1.11",
+    "@storybook/addons": "^6.1.11",
+    "@storybook/react": "^6.1.11",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@types/faker": "^5.1.5",
+    "@types/jest": "^26.0.19",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-redux": "^7.1.12",
+    "@types/styled-components": "^5.1.5",
+    "babel-loader": "^8.2.2",
+    "faker": "^5.1.0",
+    "git-cz": "^4.7.6",
+    "husky": "^4.3.6",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-styled-components": "^7.0.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-is": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "reselect": "^4.0.0",
+    "styled-components": "^5.2.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.0.3",
+    "typescript": "^4.1.3"
+  }
+}

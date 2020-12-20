@@ -1,0 +1,84 @@
+'use strict';
+
+const path = require('path');
+
+module.exports = {
+  description: 'Add component',
+  prompts: [
+  //   {
+  //   type: 'list',
+  //   name: 'type',
+  //   message: 'Select the type of component',
+  //   default: 'Stateless',
+  //   choices: () => ['Stateless', 'Component'],
+  // },
+  {
+    type: 'input',
+    name: 'name',
+    message: 'What should it be called?',
+    validate: (value) => {
+      if ((/.+/).test(value)) { return true; }
+      return 'name is required';
+    }
+  },
+  {
+    type: 'confirm',
+    name: 'useRouter',
+    default: true,
+    message: 'Do you want a connected component to memory router?'
+  },
+  {
+    type: 'input',
+    name: 'relativePath',
+    message: 'Folder'
+  }],
+  actions: (data) => {
+    // Generate index.js and index.test.js
+    let componentTemplate = path.resolve(__dirname, 'base.tsx.hbs');
+    let story = path.resolve(__dirname, 'story.tsx.hbs');
+    let spec = path.resolve(__dirname, 'test.tsx.hbs');
+
+    // switch (data.type) {
+    //   case 'Stateless': {
+    //     componentTemplate = path.resolve(__dirname, 'stateless.js.hbs');
+    //     break;
+    //   }
+    //   case 'Component': {
+    //     componentTemplate = path.resolve(__dirname, 'component.js.hbs');
+    //     break;
+    //   }
+    //   default: {
+    //     componentTemplate = path.resolve(__dirname, 'stateless.js.hbs');
+    //   }
+    // }
+
+    let relativePath;
+
+    if (data.relativePath) {
+      relativePath = 'src/atoms/' + data.relativePath + '/{{properCase name}}/'
+    } else {
+      relativePath = 'src/atoms/{{properCase name}}/'
+    }
+
+    const actions = [{
+      type: 'add',
+      path: path.resolve(process.cwd(), relativePath+'index.tsx'),
+      templateFile: componentTemplate,
+      abortOnFail: true,
+    },
+    {
+      type: 'add',
+      path: path.resolve(process.cwd(), relativePath+`{{properCase name}}.spec.tsx`),
+      templateFile: spec,
+      abortOnFail: true,
+    },
+    {
+      type: 'add',
+      path: path.resolve(process.cwd(), relativePath+`{{properCase name}}.stories.tsx`),
+      templateFile: story,
+      abortOnFail: true,
+    }];
+
+    return actions;
+  },
+};

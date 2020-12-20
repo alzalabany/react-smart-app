@@ -1,2 +1,4 @@
 /* istanbul ignore next */
-export * from './Thing';
+export * from './atoms';
+export * from './i18n';
+

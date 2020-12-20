@@ -1,0 +1,23 @@
+import React, { FC, HTMLAttributes, ReactNode } from 'react';
+import t from 'prop-types';
+
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  children?: ReactNode;
+}
+
+export const {{ properCase name }}: FC<Props> = ({ children }) => {
+  return (
+    <div data-testid="main">
+      {children || `the snozzberries taste like snozzberries`}
+    </div>
+  );
+};
+
+
+{{ properCase name }}.propTypes = {
+  children: t.node
+};
+
+{{ properCase name }}.defaultProps = {
+  children: null
+};

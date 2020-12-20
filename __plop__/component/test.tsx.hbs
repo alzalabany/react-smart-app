@@ -1,0 +1,24 @@
+import { render, screen } from '@testing-library/react';
+import React from 'react';
+{{#if useRouter}}
+import { MemoryRouter } from 'react-router-dom';
+{{/if}}
+
+import { {{ properCase name }} } from './index';
+
+describe('{{ properCase name }}', () => {
+  it('snapshot', () => {
+    render(
+      {{#if useRouter}}
+      <MemoryRouter>
+      {{/if}}
+        <{{ properCase name }}>Test string {{name}} </{{ properCase name }}>
+      {{#if useRouter}}
+      </MemoryRouter>
+      {{/if}}
+    );
+    expect(screen.getByTestId('{{ lowerCase name }}').innerHTML).toMatchInlineSnapshot(
+      `"Test string {{name}}"`
+    );
+  });
+});

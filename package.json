@@ -24,18 +24,22 @@
     ]
   },
   "scripts": {
-    "start": "tsdx watch",
+    "start": "yarn --cwd example start",
     "build": "tsdx build",
+    "watch": "tsdx watch",
     "test": "tsdx test",
     "lint": "tsdx lint src",
+    "cy:run": "yarn wait-on http://localhost:1234 && cypress open",
+    "e2e": "concurrently \"yarn start\" \"yarn cy:run\" ",
     "commit": "clear && git-cz && git push -u origin --tags",
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "postinstall": "npx yarn-deduplicate yarn.lock"
   },
   "dependencies": {},
   "peerDependencies": {
-    "react": ">=16",
+    "react": ">=16.8 || >=17",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "reselect": "^4.0.0",
@@ -44,7 +48,29 @@
   "jest": {
     "setupFilesAfterEnv": [
       "./setupTests.ts"
-    ]
+    ],
+    "transform": {
+      "^.+\\.mdx$": "@storybook/addon-docs/jest-transform-mdx",
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "out",
+      ".storybook",
+      ".stories.mdx",
+      ".stories.tsx",
+      ".stories.jsx",
+      ".js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 25,
+        "functions": 70,
+        "lines": 70,
+        "statements": -20
+      }
+    }
   },
   "husky": {
     "hooks": {
@@ -87,6 +113,9 @@
     "@types/react-redux": "^7.1.12",
     "@types/styled-components": "^5.1.5",
     "babel-loader": "^8.2.2",
+    "concurrently": "^5.3.0",
+    "cypress": "^6.1.0",
+    "eslint-plugin-cypress": "^2.11.2",
     "faker": "^5.1.0",
     "git-cz": "^4.7.6",
     "husky": "^4.3.6",
@@ -98,9 +127,12 @@
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "reselect": "^4.0.0",
+    "start-server-and-test": "^1.11.6",
     "styled-components": "^5.2.1",
+    "ts-jest": "^26.4.4",
     "tsdx": "^0.14.1",
     "tslib": "^2.0.3",
-    "typescript": "^4.1.3"
+    "typescript": "^4.1.3",
+    "wait-on": "^5.2.0"
   }
 }
